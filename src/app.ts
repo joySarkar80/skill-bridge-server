@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import { AuthRoutes } from './modules/Auth/auth.route';
+import { AdminRoutes } from './modules/Admin/admin.route';
 
 const app: Application = express();
 
@@ -12,6 +13,8 @@ app.use(cors());
 // app.use('/api/v1', router);
 
 app.use('/api/v1/auth', AuthRoutes)
+
+app.use('/api/admin', AdminRoutes)
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello from skill bridge server');
