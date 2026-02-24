@@ -1,9 +1,10 @@
 import { prisma } from "../../lib/prisma";
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import config from "../../config";
 import { email } from "zod";
 
-export const secret  = "jfkjdjfdjfg"
+
 
 const createUser = async (payload: any) => {
     const hashPassword = await bcrypt.hash(payload.password, 8);
@@ -26,8 +27,16 @@ const loginUser = async (payload: any) => {
         }
     })
 
-    if(!user){
+    if (!user) {
         throw new Error("User not found!")
+    }
+    
+    // const match = await bcrypt.compare(pass as string, data.password);
+
+    const isPasswordMatched = await bcrypt.compare(payload.password, user.password)
+
+    if (!isPasswordMatched) {
+        throw new Error("Password dont match!");
     }
 
     const userData = {
@@ -38,7 +47,7 @@ const loginUser = async (payload: any) => {
         email: user.email
     }
 
-    const token = jwt.sign(userData, secret, {expiresIn: "1d"})
+    const token = jwt.sign(userData, config.jwtSecret as string, { expiresIn: "1d" })
 
     return {
         token,

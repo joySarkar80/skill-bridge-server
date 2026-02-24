@@ -1,31 +1,50 @@
 import { Request, Response } from "express";
-import { prisma } from "../../lib/prisma";
 import { AuthService } from "./auth.service";
-import { success } from "zod";
+import sendResponse from "../../utils/sendRespons";
 
 const createUser = async (req: Request, res: Response) => {
     try {
         const result = await AuthService.createUser(req.body)
-        res.status(201).json({
+
+        sendResponse(res, {
+            statusCode: 201,
             success: true,
-            message: "User create",
+            message: "User created",
             data: result
         })
     } catch (error) {
-        console.log(error);
+        sendResponse(res, {
+            statusCode: 201,
+            success: true,
+            message: "Something went wrong!",
+            data: error
+        })
     }
 }
 
 const loginUser = async (req: Request, res: Response) => {
     try {
         const result = await AuthService.loginUser(req.body)
-        res.status(200).json({
+
+        res.cookie("token", result.token, {
+            secure: false,
+            httpOnly: true,
+            sameSite: "strict"
+        })
+
+        sendResponse(res, {
+            statusCode: 201,
             success: true,
-            message: "User create",
+            message: "User logged in successfull",
             data: result
         })
-    } catch (error) {
-        console.log(error);
+    } catch (error: any) {
+        sendResponse(res, {
+            statusCode: 400,
+            success: false,
+            message: error.message,
+            data: error
+        })
     }
 }
 
