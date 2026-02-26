@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AuthRoutes } from "../modules/Auth/auth.route";
 import { AdminRoutes } from "../modules/Admin/admin.route";
 import { CategoryRoutes } from "../modules/Category/category.route";
+import { TutorProfileRoutes } from "../modules/Tutor/tutor.routes";
 
 const router = Router();
 
@@ -20,6 +21,10 @@ const routerManager = [
     {
         path: "/admin",
         route: CategoryRoutes
+    },
+    {
+        path: "/tutor",
+        route: TutorProfileRoutes
     },
 ];
 

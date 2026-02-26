@@ -2,9 +2,6 @@ import { prisma } from "../../lib/prisma";
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import config from "../../config";
-import { email } from "zod";
-
-
 
 const createUser = async (payload: any) => {
     const hashPassword = await bcrypt.hash(payload.password, 8);
