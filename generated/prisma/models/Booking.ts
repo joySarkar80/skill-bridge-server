@@ -28,9 +28,9 @@ export type BookingMinAggregateOutputType = {
   id: string | null
   studentId: string | null
   tutorId: string | null
-  date: Date | null
-  startTime: Date | null
-  endTime: Date | null
+  date: string | null
+  startTime: string | null
+  endTime: string | null
   status: $Enums.BookingStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -40,9 +40,9 @@ export type BookingMaxAggregateOutputType = {
   id: string | null
   studentId: string | null
   tutorId: string | null
-  date: Date | null
-  startTime: Date | null
-  endTime: Date | null
+  date: string | null
+  startTime: string | null
+  endTime: string | null
   status: $Enums.BookingStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -175,9 +175,9 @@ export type BookingGroupByOutputType = {
   id: string
   studentId: string
   tutorId: string
-  date: Date
-  startTime: Date
-  endTime: Date
+  date: string
+  startTime: string
+  endTime: string
   status: $Enums.BookingStatus
   createdAt: Date
   updatedAt: Date
@@ -208,9 +208,9 @@ export type BookingWhereInput = {
   id?: Prisma.StringFilter<"Booking"> | string
   studentId?: Prisma.StringFilter<"Booking"> | string
   tutorId?: Prisma.StringFilter<"Booking"> | string
-  date?: Prisma.DateTimeFilter<"Booking"> | Date | string
-  startTime?: Prisma.DateTimeFilter<"Booking"> | Date | string
-  endTime?: Prisma.DateTimeFilter<"Booking"> | Date | string
+  date?: Prisma.StringFilter<"Booking"> | string
+  startTime?: Prisma.StringFilter<"Booking"> | string
+  endTime?: Prisma.StringFilter<"Booking"> | string
   status?: Prisma.EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
@@ -241,9 +241,9 @@ export type BookingWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.BookingWhereInput | Prisma.BookingWhereInput[]
   studentId?: Prisma.StringFilter<"Booking"> | string
   tutorId?: Prisma.StringFilter<"Booking"> | string
-  date?: Prisma.DateTimeFilter<"Booking"> | Date | string
-  startTime?: Prisma.DateTimeFilter<"Booking"> | Date | string
-  endTime?: Prisma.DateTimeFilter<"Booking"> | Date | string
+  date?: Prisma.StringFilter<"Booking"> | string
+  startTime?: Prisma.StringFilter<"Booking"> | string
+  endTime?: Prisma.StringFilter<"Booking"> | string
   status?: Prisma.EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
@@ -274,9 +274,9 @@ export type BookingScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Booking"> | string
   studentId?: Prisma.StringWithAggregatesFilter<"Booking"> | string
   tutorId?: Prisma.StringWithAggregatesFilter<"Booking"> | string
-  date?: Prisma.DateTimeWithAggregatesFilter<"Booking"> | Date | string
-  startTime?: Prisma.DateTimeWithAggregatesFilter<"Booking"> | Date | string
-  endTime?: Prisma.DateTimeWithAggregatesFilter<"Booking"> | Date | string
+  date?: Prisma.StringWithAggregatesFilter<"Booking"> | string
+  startTime?: Prisma.StringWithAggregatesFilter<"Booking"> | string
+  endTime?: Prisma.StringWithAggregatesFilter<"Booking"> | string
   status?: Prisma.EnumBookingStatusWithAggregatesFilter<"Booking"> | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Booking"> | Date | string
@@ -284,9 +284,9 @@ export type BookingScalarWhereWithAggregatesInput = {
 
 export type BookingCreateInput = {
   id?: string
-  date: Date | string
-  startTime: Date | string
-  endTime: Date | string
+  date: string
+  startTime: string
+  endTime: string
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -299,9 +299,9 @@ export type BookingUncheckedCreateInput = {
   id?: string
   studentId: string
   tutorId: string
-  date: Date | string
-  startTime: Date | string
-  endTime: Date | string
+  date: string
+  startTime: string
+  endTime: string
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -310,9 +310,9 @@ export type BookingUncheckedCreateInput = {
 
 export type BookingUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -325,9 +325,9 @@ export type BookingUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   tutorId?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -338,9 +338,9 @@ export type BookingCreateManyInput = {
   id?: string
   studentId: string
   tutorId: string
-  date: Date | string
-  startTime: Date | string
-  endTime: Date | string
+  date: string
+  startTime: string
+  endTime: string
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -348,9 +348,9 @@ export type BookingCreateManyInput = {
 
 export type BookingUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -360,9 +360,9 @@ export type BookingUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   tutorId?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -523,9 +523,9 @@ export type BookingUpdateOneRequiredWithoutReviewNestedInput = {
 
 export type BookingCreateWithoutStudentInput = {
   id?: string
-  date: Date | string
-  startTime: Date | string
-  endTime: Date | string
+  date: string
+  startTime: string
+  endTime: string
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -536,9 +536,9 @@ export type BookingCreateWithoutStudentInput = {
 export type BookingUncheckedCreateWithoutStudentInput = {
   id?: string
   tutorId: string
-  date: Date | string
-  startTime: Date | string
-  endTime: Date | string
+  date: string
+  startTime: string
+  endTime: string
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -557,9 +557,9 @@ export type BookingCreateManyStudentInputEnvelope = {
 
 export type BookingCreateWithoutTutorInput = {
   id?: string
-  date: Date | string
-  startTime: Date | string
-  endTime: Date | string
+  date: string
+  startTime: string
+  endTime: string
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -570,9 +570,9 @@ export type BookingCreateWithoutTutorInput = {
 export type BookingUncheckedCreateWithoutTutorInput = {
   id?: string
   studentId: string
-  date: Date | string
-  startTime: Date | string
-  endTime: Date | string
+  date: string
+  startTime: string
+  endTime: string
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -612,9 +612,9 @@ export type BookingScalarWhereInput = {
   id?: Prisma.StringFilter<"Booking"> | string
   studentId?: Prisma.StringFilter<"Booking"> | string
   tutorId?: Prisma.StringFilter<"Booking"> | string
-  date?: Prisma.DateTimeFilter<"Booking"> | Date | string
-  startTime?: Prisma.DateTimeFilter<"Booking"> | Date | string
-  endTime?: Prisma.DateTimeFilter<"Booking"> | Date | string
+  date?: Prisma.StringFilter<"Booking"> | string
+  startTime?: Prisma.StringFilter<"Booking"> | string
+  endTime?: Prisma.StringFilter<"Booking"> | string
   status?: Prisma.EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
@@ -638,9 +638,9 @@ export type BookingUpdateManyWithWhereWithoutTutorInput = {
 
 export type BookingCreateWithoutReviewInput = {
   id?: string
-  date: Date | string
-  startTime: Date | string
-  endTime: Date | string
+  date: string
+  startTime: string
+  endTime: string
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -652,9 +652,9 @@ export type BookingUncheckedCreateWithoutReviewInput = {
   id?: string
   studentId: string
   tutorId: string
-  date: Date | string
-  startTime: Date | string
-  endTime: Date | string
+  date: string
+  startTime: string
+  endTime: string
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -678,9 +678,9 @@ export type BookingUpdateToOneWithWhereWithoutReviewInput = {
 
 export type BookingUpdateWithoutReviewInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -692,9 +692,9 @@ export type BookingUncheckedUpdateWithoutReviewInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   tutorId?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -703,9 +703,9 @@ export type BookingUncheckedUpdateWithoutReviewInput = {
 export type BookingCreateManyStudentInput = {
   id?: string
   tutorId: string
-  date: Date | string
-  startTime: Date | string
-  endTime: Date | string
+  date: string
+  startTime: string
+  endTime: string
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -714,9 +714,9 @@ export type BookingCreateManyStudentInput = {
 export type BookingCreateManyTutorInput = {
   id?: string
   studentId: string
-  date: Date | string
-  startTime: Date | string
-  endTime: Date | string
+  date: string
+  startTime: string
+  endTime: string
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -724,9 +724,9 @@ export type BookingCreateManyTutorInput = {
 
 export type BookingUpdateWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -737,9 +737,9 @@ export type BookingUpdateWithoutStudentInput = {
 export type BookingUncheckedUpdateWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tutorId?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -749,9 +749,9 @@ export type BookingUncheckedUpdateWithoutStudentInput = {
 export type BookingUncheckedUpdateManyWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tutorId?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -759,9 +759,9 @@ export type BookingUncheckedUpdateManyWithoutStudentInput = {
 
 export type BookingUpdateWithoutTutorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -772,9 +772,9 @@ export type BookingUpdateWithoutTutorInput = {
 export type BookingUncheckedUpdateWithoutTutorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -784,9 +784,9 @@ export type BookingUncheckedUpdateWithoutTutorInput = {
 export type BookingUncheckedUpdateManyWithoutTutorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -875,9 +875,9 @@ export type $BookingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     studentId: string
     tutorId: string
-    date: Date
-    startTime: Date
-    endTime: Date
+    date: string
+    startTime: string
+    endTime: string
     status: $Enums.BookingStatus
     createdAt: Date
     updatedAt: Date
@@ -1310,9 +1310,9 @@ export interface BookingFieldRefs {
   readonly id: Prisma.FieldRef<"Booking", 'String'>
   readonly studentId: Prisma.FieldRef<"Booking", 'String'>
   readonly tutorId: Prisma.FieldRef<"Booking", 'String'>
-  readonly date: Prisma.FieldRef<"Booking", 'DateTime'>
-  readonly startTime: Prisma.FieldRef<"Booking", 'DateTime'>
-  readonly endTime: Prisma.FieldRef<"Booking", 'DateTime'>
+  readonly date: Prisma.FieldRef<"Booking", 'String'>
+  readonly startTime: Prisma.FieldRef<"Booking", 'String'>
+  readonly endTime: Prisma.FieldRef<"Booking", 'String'>
   readonly status: Prisma.FieldRef<"Booking", 'BookingStatus'>
   readonly createdAt: Prisma.FieldRef<"Booking", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Booking", 'DateTime'>

@@ -3,6 +3,7 @@ import { AuthRoutes } from "../modules/Auth/auth.route";
 import { AdminRoutes } from "../modules/Admin/admin.route";
 import { CategoryRoutes } from "../modules/Category/category.route";
 import { TutorProfileRoutes } from "../modules/Tutor/tutor.routes";
+import { AvailabilityRoutes } from "../modules/Availability/availability.routes";
 
 const router = Router();
 
@@ -25,6 +26,10 @@ const routerManager = [
     {
         path: "/tutor",
         route: TutorProfileRoutes
+    },
+        {
+        path: "/tutor",
+        route: AvailabilityRoutes
     },
 ];
 

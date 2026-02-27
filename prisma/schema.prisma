@@ -7,7 +7,6 @@ datasource db {
   provider = "postgresql"
 }
 
-
 // ENUMS
 enum Role {
   STUDENT
@@ -48,7 +47,6 @@ model User {
   @@map("users")
 }
 
-
 model TutorProfile {
   id         String  @id @default(uuid())
   userId     String  @unique
@@ -65,7 +63,6 @@ model TutorProfile {
   availability Availability[]
 }
 
-
 model Category {
   id        String   @id @default(uuid())
   name      String   @unique
@@ -74,25 +71,23 @@ model Category {
   tutorProfiles TutorProfile[]
 }
 
-
 model Availability {
   id        String   @id @default(uuid())
   tutorId   String
-  dayOfWeek Int 
-  startTime DateTime
-  endTime   DateTime
+  dayOfWeek Int
+  startTime String
+  endTime   String
 
   tutor TutorProfile @relation(fields: [tutorId], references: [id], onDelete: Cascade)
 }
-
 
 model Booking {
   id        String        @id @default(uuid())
   studentId String
   tutorId   String
-  date      DateTime
-  startTime DateTime
-  endTime   DateTime
+  date      String
+  startTime String
+  endTime   String
   status    BookingStatus @default(CONFIRMED)
 
   createdAt DateTime @default(now())
@@ -102,7 +97,6 @@ model Booking {
   tutor   User    @relation("TutorBookings", fields: [tutorId], references: [id])
   review  Review?
 }
-
 
 model Review {
   id        String  @id @default(uuid())
