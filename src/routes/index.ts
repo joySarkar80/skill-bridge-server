@@ -5,6 +5,7 @@ import { CategoryRoutes } from "../modules/Category/category.route";
 import { TutorProfileRoutes } from "../modules/Tutor/tutor.routes";
 import { AvailabilityRoutes } from "../modules/Availability/availability.routes";
 import { BookingsRoutes } from "../modules/Bookings/bookings.routes";
+import { ReviewRoutes } from "../modules/Review/review.route";
 
 const router = Router();
 
@@ -32,9 +33,13 @@ const routerManager = [
         path: "/tutor",
         route: AvailabilityRoutes
     },
-        {
+    {
         path: "/bookings",
         route: BookingsRoutes
+    },
+        {
+        path: "/review",
+        route: ReviewRoutes
     },
 ];
 

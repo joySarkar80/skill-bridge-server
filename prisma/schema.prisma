@@ -72,7 +72,7 @@ model Category {
 }
 
 model Availability {
-  id        String   @id @default(uuid())
+  id        String @id @default(uuid())
   tutorId   String
   dayOfWeek Int
   startTime String
@@ -96,6 +96,8 @@ model Booking {
   student User    @relation("StudentBookings", fields: [studentId], references: [id])
   tutor   User    @relation("TutorBookings", fields: [tutorId], references: [id])
   review  Review?
+
+  @@unique([tutorId, date, startTime, endTime])
 }
 
 model Review {

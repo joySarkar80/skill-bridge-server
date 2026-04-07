@@ -49,6 +49,35 @@ const createTutorProfile = async (userId: string, payload: ITutorProfilePayload)
     return result;
 };
 
+const getAllTutor = async () => {
+    const tutors = await prisma.tutorProfile.findMany({
+        include: {
+            user: true,
+            category: true,
+        }
+    });
+
+    return tutors;
+}
+
+const getSingleTutor = async (id: string) => {
+    const result = await prisma.tutorProfile.findUnique({
+        where: { id },
+        include: {
+            user: true,
+            category: true,
+        },
+    });
+
+    if (!result) {
+        throw new Error("Tutor not found");
+    }
+
+    return result;
+};
+
 export const TutorProfileService = {
     createTutorProfile,
+    getAllTutor,
+    getSingleTutor
 };
