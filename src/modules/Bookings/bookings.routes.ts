@@ -3,7 +3,6 @@ import auth from "../../middlewares/auth";
 import { UserRole } from "../../middlewares/auth";
 import { bookingsController } from "./bookings.controller";
 
-
 const router = Router();
 
 router.post(

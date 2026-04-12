@@ -1,42 +1,41 @@
 import { prisma } from "../../lib/prisma";
 
-const createBooking = async (studentId: string, payload: any) => {
+const createBooking = async (
+  studentId: string,
+  payload: any
+) => {
+  const existingBooking =
+    await prisma.booking.findFirst({
+      where: {
+        studentId,
+        tutorId: payload.tutorId,
+        dayOfWeek: payload.dayOfWeek,
+        date: payload.date,
+        startTime: payload.startTime,
+        endTime: payload.endTime,
+      },
+    });
 
-  // find tutor profile
-  const tutorProfile = await prisma.tutorProfile.findUnique({
-    where: { userId: payload.tutorId }
-  });
-
-  if (!tutorProfile) {
-    throw new Error("Tutor not found");
+  if (existingBooking) {
+    throw new Error(
+      "You already booked this slot"
+    );
   }
 
-  // check availability
-  // const availability = await prisma.availability.findFirst({
-  //   where: {
-  //     tutorId: tutorProfile.id,
-  //     dayOfWeek: payload.dayOfWeek
-  //   }
-  // });
-
-  // if (!availability) {
-  //   throw new Error("Tutor not available on this day");
-  // }
-
-  // simple booking create
   const result = await prisma.booking.create({
     data: {
       studentId,
       tutorId: payload.tutorId,
+      dayOfWeek: payload.dayOfWeek,
       date: payload.date,
       startTime: payload.startTime,
       endTime: payload.endTime,
-    }
+    },
   });
 
   return result;
 };
 
 export const bookingService = {
-  createBooking
+  createBooking,
 };
