@@ -49,7 +49,7 @@ const createTutorProfile = async (userId: string, payload: ITutorProfilePayload)
     return result;
 };
 
-const getAllTutor = async () => {
+const getAllTutorProfile = async () => {
     const tutors = await prisma.tutorProfile.findMany({
         include: {
             user: true,
@@ -59,6 +59,16 @@ const getAllTutor = async () => {
 
     return tutors;
 }
+
+export const getAllTutors = async () => {
+  const result = await prisma.user.findMany({
+    where: {
+      role: "TUTOR",
+    },
+  });
+
+  return result;
+};
 
 const getSingleTutor = async (id: string) => {
     const tutor = await prisma.tutorProfile.findUnique({
@@ -96,6 +106,7 @@ const getSingleTutor = async (id: string) => {
 
 export const TutorProfileService = {
     createTutorProfile,
-    getAllTutor,
-    getSingleTutor
+    getAllTutorProfile,
+    getSingleTutor,
+    getAllTutors
 };

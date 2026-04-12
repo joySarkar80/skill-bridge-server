@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { TutorProfileService } from "./tutor.service";
+import sendResponse from "../../utils/sendRespons";
 
 
 const createTutorProfile = async (req: Request, res: Response) => {
@@ -23,9 +24,9 @@ const createTutorProfile = async (req: Request, res: Response) => {
   }
 };
 
-const getAllTutor = async (req: Request, res: Response) => {
+const getAllTutorProfile = async (req: Request, res: Response) => {
   try {
-    const result = await TutorProfileService.getAllTutor();
+    const result = await TutorProfileService.getAllTutorProfile();
     res.status(201).json({
       success: true,
       message: "Retrive all tutor successfully",
@@ -38,6 +39,25 @@ const getAllTutor = async (req: Request, res: Response) => {
     });
   }
 }
+
+const getAllTutors = async (req: Request, res: Response) => {
+  try {
+    const result = await TutorProfileService.getAllTutors();
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: "Tutors retrieved successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+      error: error,
+    });
+  }
+};
 
 const getSingleTutor = async (req: Request, res: Response) => {
   try {
@@ -61,6 +81,7 @@ const getSingleTutor = async (req: Request, res: Response) => {
 
 export const TutorProfileController = {
   createTutorProfile,
-  getAllTutor,
-  getSingleTutor
+  getAllTutorProfile,
+  getSingleTutor,
+  getAllTutors
 };
