@@ -5,6 +5,17 @@ const getAllUsers = async () => {
   return result;
 };
 
+const getAllStudents = async () => {
+  const result = await prisma.user.findMany({
+    where: {
+      role: "STUDENT",
+    },
+  });
+
+  return result;
+};
+
 export const AdminService = {
   getAllUsers,
+  getAllStudents
 };

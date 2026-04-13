@@ -10,6 +10,7 @@ router.post(
 );
 
 router.get("/tutors", auth(UserRole.admin), TutorProfileController.getAllTutors);
+router.get("/", TutorProfileController.getAllTutorProfile);
 
 router.get("/:id", TutorProfileController.getSingleTutor);
 

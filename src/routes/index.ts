@@ -31,6 +31,10 @@ const routerManager = [
         route: TutorProfileRoutes
     },
     {
+        path: "/tutors",
+        route: TutorProfileRoutes
+    },
+    {
         path: "/tutor",
         route: AvailabilityRoutes
     },
