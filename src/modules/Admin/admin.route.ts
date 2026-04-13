@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.get('/users', auth(UserRole.admin), AdminController.getAllUsers)
 router.get('/students', auth(UserRole.admin), AdminController.getAllStudents)
+router.get('/bookings', auth(UserRole.admin), AdminController.getAllBooking)
 
 export const AdminRoutes = router;

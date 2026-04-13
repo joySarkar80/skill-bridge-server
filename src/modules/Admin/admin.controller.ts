@@ -38,7 +38,27 @@ const getAllStudents = async (req: Request, res: Response) => {
   }
 };
 
+const getAllBooking = async (req: Request, res: Response) => {
+  try {
+    const result = await AdminService.getAllBooking();
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: "Bookings retrieved successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+      error: error,
+    });
+  }
+};
+
 export const AdminController = {
   getAllUsers,
-  getAllStudents
+  getAllStudents,
+  getAllBooking
 };

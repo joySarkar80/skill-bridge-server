@@ -15,7 +15,29 @@ const getAllStudents = async () => {
   return result;
 };
 
+
+const getAllBooking = async () => {
+  const result = await prisma.booking.findMany({
+    include: {
+      student: true, 
+      tutor: {
+        include: {
+          tutorProfile: {
+            include: {
+              category: true 
+            }
+          }
+        }
+      }
+    },
+  });
+  return result;
+};
+
 export const AdminService = {
   getAllUsers,
-  getAllStudents
+  getAllStudents,
+  getAllBooking
 };
+
+

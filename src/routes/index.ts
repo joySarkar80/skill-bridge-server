@@ -27,6 +27,10 @@ const routerManager = [
         route: CategoryRoutes
     },
     {
+        path: "/categories",
+        route: CategoryRoutes
+    },
+    {
         path: "/admin",
         route: TutorProfileRoutes
     },
