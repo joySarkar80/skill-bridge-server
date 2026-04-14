@@ -9,4 +9,8 @@ router.post(
     "/", auth(UserRole.student), bookingsController.createBookings
 );
 
+router.get(
+    "/:id", auth(UserRole.student), bookingsController.getBookingsByStudentId
+);
+
 export const BookingsRoutes = router;

@@ -19,12 +19,12 @@ const getAllStudents = async () => {
 const getAllBooking = async () => {
   const result = await prisma.booking.findMany({
     include: {
-      student: true, 
+      student: true,
       tutor: {
         include: {
           tutorProfile: {
             include: {
-              category: true 
+              category: true
             }
           }
         }
