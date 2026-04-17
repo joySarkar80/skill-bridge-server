@@ -7,10 +7,14 @@ const createBooking = async (
   const existingBooking =
     await prisma.booking.findFirst({
       where: {
+        availabilityId: payload.availabilityId,
         studentId,
         tutorId: payload.tutorId,
-        dayOfWeek: payload.dayOfWeek,
-        date: payload.date,
+        categoryId: payload.categoryId,
+        categoryName: payload.categoryName,
+        hourlyRate: payload.hourlyRate,
+        tutorName: payload.tutorName,
+        date: new Date(payload.date),
         startTime: payload.startTime,
         endTime: payload.endTime,
       },
@@ -22,14 +26,40 @@ const createBooking = async (
     );
   }
 
+  const slotId = payload.availabilityId;
+  console.log(slotId);
+
+  const slot = await prisma.availability.findUnique({
+    where: { id: slotId },
+  });
+
+  if (!slot) {
+    throw new Error("Slot not found");
+  }
+
+  if (slot.isBooked) {
+    throw new Error("Slot already booked");
+  }
+
   const result = await prisma.booking.create({
     data: {
+      availabilityId: payload.availabilityId,
       studentId,
       tutorId: payload.tutorId,
-      dayOfWeek: payload.dayOfWeek,
-      date: payload.date,
+      categoryId: payload.categoryId,
+      categoryName: payload.categoryName,
+      hourlyRate: payload.hourlyRate,
+      tutorName: payload.tutorName,
+      date: new Date(payload.date),
       startTime: payload.startTime,
       endTime: payload.endTime,
+    },
+  });
+
+  await prisma.availability.update({
+    where: { id: slotId },
+    data: {
+      isBooked: true,
     },
   });
 
@@ -46,7 +76,7 @@ const getBookingsByStudentId = async (studentId: string) => {
         include: {
           tutorProfile: {
             include: {
-              category: true, 
+              category: true,
             },
           },
         },

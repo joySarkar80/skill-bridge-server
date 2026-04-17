@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -48,30 +47,46 @@ model Category {
 }
 
 model Availability {
-  id        String       @id @default(uuid())
+  id        String   @id @default(uuid())
   tutorId   String
-  dayOfWeek Int
+  date      DateTime
   startTime String
   endTime   String
-  tutor     TutorProfile @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  isBooked  Boolean  @default(false)
+
+  tutor   TutorProfile @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  booking Booking?
+
+  @@unique([tutorId, date, startTime, endTime])
 }
 
 model Booking {
-  id        String        @id @default(uuid())
+  id             String @id @default(uuid())
+  availabilityId String @unique
+
   studentId String
   tutorId   String
-  date      String
+
+  categoryId   String
+  categoryName String
+  hourlyRate   Float
+  tutorName    String
+
+  date      DateTime
   startTime String
   endTime   String
-  status    BookingStatus @default(CONFIRMED)
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  dayOfWeek Int
-  student   User          @relation("StudentBookings", fields: [studentId], references: [id])
-  tutor     User          @relation("TutorBookings", fields: [tutorId], references: [id])
-  review    Review?
 
-  @@unique([studentId, tutorId, dayOfWeek, date, startTime, endTime])
+  status BookingStatus @default(CONFIRMED)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  availability Availability @relation(fields: [availabilityId], references: [id])
+
+  student User @relation("StudentBookings", fields: [studentId], references: [id])
+  tutor   User @relation("TutorBookings", fields: [tutorId], references: [id])
+
+  review Review?
 }
 
 model Review {

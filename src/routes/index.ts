@@ -31,10 +31,17 @@ const routerManager = [
         route: CategoryRoutes
     },
     {
+        // create, update and get single tutor profile..
+        path: "/tutor",
+        route: TutorProfileRoutes
+    },
+    {
+        // get all tutors for admin, not tutor profile..
         path: "/admin",
         route: TutorProfileRoutes
     },
     {
+        // get all tutor profile..
         path: "/tutors",
         route: TutorProfileRoutes
     },
@@ -51,6 +58,7 @@ const routerManager = [
         route: ReviewRoutes
     },
     {
+        // this route provid single user date from user table..
         path: "/me",
         route: UserRoutes
     },

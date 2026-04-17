@@ -6,8 +6,8 @@ import { availabilityController } from "./availability.controller";
 
 const router = Router();
 
-router.post(
-    "/availability", auth(UserRole.tutor), availabilityController.createAvailability
-);
+router.post("/availability", auth(UserRole.tutor), availabilityController.createAvailability);
+
+router.put("/availability/:id", auth(UserRole.tutor), availabilityController.updateAvailabilityHandler);
 
 export const AvailabilityRoutes = router;

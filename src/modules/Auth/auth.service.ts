@@ -17,7 +17,7 @@ const createUser = async (payload: any) => {
 }
 
 const loginUser = async (payload: any) => {
-    // console.log(payload);
+    console.log(payload);
     const user = await prisma.user.findUnique({
         where: {
             email: payload.email

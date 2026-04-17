@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models'
-export type * from './prismaNamespace'
+export type * from '../models.js'
+export type * from './prismaNamespace.js'
 
 export const Decimal = runtime.Decimal
 
@@ -115,7 +115,7 @@ export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typ
 export const AvailabilityScalarFieldEnum = {
   id: 'id',
   tutorId: 'tutorId',
-  dayOfWeek: 'dayOfWeek',
+  date: 'date',
   startTime: 'startTime',
   endTime: 'endTime'
 } as const
@@ -132,8 +132,7 @@ export const BookingScalarFieldEnum = {
   endTime: 'endTime',
   status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  dayOfWeek: 'dayOfWeek'
+  updatedAt: 'updatedAt'
 } as const
 
 export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
