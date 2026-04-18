@@ -62,6 +62,11 @@ const routerManager = [
         path: "/me",
         route: UserRoutes
     },
+    {
+        // this route provid single user ban unban..
+        path: "/user",
+        route: UserRoutes
+    },
 ];
 
 routerManager.forEach((r) => router.use(r.path, r.route))

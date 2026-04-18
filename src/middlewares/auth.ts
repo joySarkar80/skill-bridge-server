@@ -12,7 +12,6 @@ export enum UserRole {
 const auth = (...roles: UserRole[]) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
-            console.log("Auth middleware invoked"); // Debugging log
             
             const token = req.cookies?.token;
 
@@ -28,7 +27,6 @@ const auth = (...roles: UserRole[]) => {
                 config.jwtSecret as string
             ) as JwtPayload;
 
-            console.log("Decoded JWT:", decoded); // Debugging log
             const userData = await prisma.user.findUnique({
                 where: {
                     email: decoded.email,
@@ -37,7 +35,6 @@ const auth = (...roles: UserRole[]) => {
             });
 
             if (!userData) {
-                console.log("User not found with email:", decoded.email);
                 return res.status(401).json({
                     success: false,
                     message: "Unauthorized!",

@@ -64,20 +64,24 @@ const getTutorBookingsHandler = async (req: Request, res: Response) => {
 
 const updateBookingStatusHandler = async (req: Request, res: Response) => {
   try {
-    const user = req.user; 
-    const bookingId = req.params.id;
+    const { id } = req.params;
+    const user = req.user;
 
-    const result = await bookingService.updateBookingStatus(bookingId as string, user?.id);
+    const result = await bookingService.updateBookingStatus(
+      id as string,
+      user?.id,
+      user?.role
+    );
 
-    res.json({
+    res.status(200).json({
       success: true,
-      message: "Booking marked as completed",
+      message: "Booking status updated",
       data: result,
     });
-  } catch (err: any) {
+  } catch (error: any) {
     res.status(400).json({
       success: false,
-      message: err.message,
+      message: error.message,
     });
   }
 };

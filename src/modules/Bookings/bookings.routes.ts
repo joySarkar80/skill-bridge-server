@@ -11,7 +11,7 @@ router.get("/tutor", auth(UserRole.tutor), bookingsController.getTutorBookingsHa
 
 router.get("/:id", auth(UserRole.student), bookingsController.getBookingsByStudentId);
 
-router.patch("/:id/status", auth(UserRole.tutor), bookingsController.updateBookingStatusHandler);
+router.patch("/:id/status", auth(UserRole.tutor, UserRole.student), bookingsController.updateBookingStatusHandler);
 
 
 export const BookingsRoutes = router;

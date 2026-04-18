@@ -100,7 +100,38 @@ const getTutorBookings = async (tutorId: string) => {
   });
 };
 
-const updateBookingStatus = async (bookingId: string, tutorId: string) => {
+// const updateBookingStatus = async (bookingId: string, tutorId: string) => {
+//   const booking = await prisma.booking.findUnique({
+//     where: { id: bookingId },
+//   });
+
+//   if (!booking) {
+//     throw new Error("Booking not found");
+//   }
+
+//   if (booking.tutorId !== tutorId) {
+//     throw new Error("Unauthorized");
+//   }
+
+//   if (booking.status !== "CONFIRMED") {
+//     throw new Error("Only confirmed bookings can be completed");
+//   }
+
+//   const result = await prisma.booking.update({
+//     where: { id: bookingId },
+//     data: {
+//       status: "COMPLETED",
+//     },
+//   });
+
+//   return result;
+// };
+
+const updateBookingStatus = async (
+  bookingId: string,
+  userId: string,
+  role: "STUDENT" | "TUTOR"
+) => {
   const booking = await prisma.booking.findUnique({
     where: { id: bookingId },
   });
@@ -109,20 +140,34 @@ const updateBookingStatus = async (bookingId: string, tutorId: string) => {
     throw new Error("Booking not found");
   }
 
-  // 🔒 Security: tutor only update his booking
-  if (booking.tutorId !== tutorId) {
-    throw new Error("Unauthorized");
+  // 🔐 Authorization check
+  if (role === "TUTOR" && booking.tutorId !== userId) {
+    throw new Error("Unauthorized (Tutor)");
   }
 
-  // শুধু CONFIRMED → COMPLETED allow
+  if (role === "STUDENT" && booking.studentId !== userId) {
+    throw new Error("Unauthorized (Student)");
+  }
+
+  // 🔥 Status logic
   if (booking.status !== "CONFIRMED") {
-    throw new Error("Only confirmed bookings can be completed");
+    throw new Error("Only confirmed bookings can be updated");
+  }
+
+  let newStatus: "COMPLETED" | "CANCELLED";
+
+  if (role === "TUTOR") {
+    newStatus = "COMPLETED";
+  } else if (role === "STUDENT") {
+    newStatus = "CANCELLED";
+  } else {
+    throw new Error("Invalid role");
   }
 
   const result = await prisma.booking.update({
     where: { id: bookingId },
     data: {
-      status: "COMPLETED",
+      status: newStatus,
     },
   });
 

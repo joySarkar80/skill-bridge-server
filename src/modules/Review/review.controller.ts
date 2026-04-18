@@ -21,7 +21,6 @@ const createReview = async (req: Request, res: Response) => {
 const getAllReviewsHandler = async (req: Request, res: Response) => {
   try {
     const user = req.user;
-    console.log("User from request:", user);  
     const result = await ReviewService.getAllReviewsFromDB(req.user);
 
     res.status(200).json({

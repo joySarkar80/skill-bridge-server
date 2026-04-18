@@ -97,6 +97,7 @@ const getSingleTutorProfile = async (id: string) => {
         },
         include: {
             student: true,
+            tutor: true,
         },
         orderBy: {
             createdAt: "desc",
