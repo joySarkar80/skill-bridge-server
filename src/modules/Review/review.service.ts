@@ -19,12 +19,10 @@ const createReview = async (payload: ReviewPayload) => {
     throw new Error("Booking not found");
   }
 
-  // Optional but strongly recommended
   if (booking.status !== "COMPLETED") {
     throw new Error("Review can be submitted only after session completion");
   }
 
-  // prevent duplicate review
   const existingReview = await prisma.review.findUnique({
     where: {
       bookingId: payload.bookingId,
@@ -53,6 +51,40 @@ const createReview = async (payload: ReviewPayload) => {
   return result;
 };
 
+
+const getAllReviewsFromDB = async (user: any) => {
+  const { id, role } = user;
+
+  let whereCondition = {};
+
+  if (role === "STUDENT") {
+    whereCondition = { studentId: id };
+  }
+
+  if (role === "TUTOR") {
+    whereCondition = { tutorId: id };
+  }
+
+  const reviews = await prisma.review.findMany({
+    where: whereCondition,
+    include: {
+      student: {
+        select: { id: true, name: true },
+      },
+      tutor: {
+        select: { id: true, name: true },
+      },
+      booking: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return reviews;
+};
+
 export const ReviewService = {
   createReview,
+  getAllReviewsFromDB
 };

@@ -18,6 +18,25 @@ const createReview = async (req: Request, res: Response) => {
   }
 };
 
+const getAllReviewsHandler = async (req: Request, res: Response) => {
+  try {
+    const user = req.user;
+    console.log("User from request:", user);  
+    const result = await ReviewService.getAllReviewsFromDB(req.user);
+
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch reviews",
+    });
+  }
+};
+
 export const ReviewController = {
   createReview,
+  getAllReviewsHandler,
 };

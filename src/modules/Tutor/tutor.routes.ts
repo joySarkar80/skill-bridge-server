@@ -17,7 +17,7 @@ router.get("/", TutorProfileController.getAllTutorProfile);
 // get all tutors for admin, not tutor profile..
 router.get("/tutors", auth(UserRole.admin), TutorProfileController.getAllTutors);
 
-// get single tutor profile..
+// get single tutor profile (public route)..  follow this convention..
 router.get("/:id", TutorProfileController.getSingleTutorProfile);
 
 

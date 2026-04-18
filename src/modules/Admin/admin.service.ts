@@ -39,5 +39,3 @@ export const AdminService = {
   getAllStudents,
   getAllBooking
 };
-
-

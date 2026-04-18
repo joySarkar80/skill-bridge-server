@@ -87,7 +87,51 @@ const getBookingsByStudentId = async (studentId: string) => {
   return bookings;
 };
 
+
+const getTutorBookings = async (tutorId: string) => {
+  return await prisma.booking.findMany({
+    where: { tutorId },
+    include: {
+      student: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};
+
+const updateBookingStatus = async (bookingId: string, tutorId: string) => {
+  const booking = await prisma.booking.findUnique({
+    where: { id: bookingId },
+  });
+
+  if (!booking) {
+    throw new Error("Booking not found");
+  }
+
+  // 🔒 Security: tutor only update his booking
+  if (booking.tutorId !== tutorId) {
+    throw new Error("Unauthorized");
+  }
+
+  // শুধু CONFIRMED → COMPLETED allow
+  if (booking.status !== "CONFIRMED") {
+    throw new Error("Only confirmed bookings can be completed");
+  }
+
+  const result = await prisma.booking.update({
+    where: { id: bookingId },
+    data: {
+      status: "COMPLETED",
+    },
+  });
+
+  return result;
+};
+
 export const bookingService = {
   createBooking,
   getBookingsByStudentId,
+  getTutorBookings,
+  updateBookingStatus,
 };
