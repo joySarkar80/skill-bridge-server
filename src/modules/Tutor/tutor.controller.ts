@@ -1,16 +1,11 @@
 import { Request, Response } from "express";
 import { TutorProfileService } from "./tutor.service";
-import sendResponse from "../../utils/sendRespons";
-
 
 const createTutorProfile = async (req: Request, res: Response) => {
   // console.log(req);
   try {
     const user = req.user;
-    const result = await TutorProfileService.createTutorProfile(
-      user?.id,
-      req.body
-    );
+    const result = await TutorProfileService.createTutorProfile(user?.id, req.body);
 
     res.status(201).json({
       success: true,
@@ -115,10 +110,29 @@ const updateTutorProfile = async (
     });
   }
 };
+
+const getTutorsByCategoryHandler = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await TutorProfileService.getTutorsByCategory(id as string);
+
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch tutors",
+    });
+  }
+};
+
 export const TutorProfileController = {
   createTutorProfile,
   getAllTutorProfile,
   getSingleTutorProfile,
   getAllTutors,
   updateTutorProfile,
+  getTutorsByCategoryHandler
 };

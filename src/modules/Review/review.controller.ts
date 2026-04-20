@@ -21,7 +21,23 @@ const createReview = async (req: Request, res: Response) => {
 const getAllReviewsHandler = async (req: Request, res: Response) => {
   try {
     const user = req.user;
-    const result = await ReviewService.getAllReviewsFromDB(req.user);
+    const result = await ReviewService.getAllReviewsFromDB(user);
+
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch reviews",
+    });
+  }
+};
+
+const getAllReviewsPublicHandler = async (req: Request, res: Response) => {
+  try {
+    const result = await ReviewService.getAllReviewsPublic();
 
     res.status(200).json({
       success: true,
@@ -38,4 +54,5 @@ const getAllReviewsHandler = async (req: Request, res: Response) => {
 export const ReviewController = {
   createReview,
   getAllReviewsHandler,
+  getAllReviewsPublicHandler,
 };

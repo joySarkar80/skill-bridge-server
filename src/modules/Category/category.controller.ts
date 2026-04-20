@@ -22,7 +22,7 @@ const createCatagory = async (req: Request, res: Response) => {
 
 const getAllCategory = async (req: Request, res: Response) => {
   try {
-    const result = await CategoryService.getAllCategory();
+  const result = await CategoryService.getAllCategory();
 
     res.status(200).json({
       success: true,

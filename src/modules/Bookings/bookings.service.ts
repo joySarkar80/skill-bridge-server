@@ -27,8 +27,6 @@ const createBooking = async (
   }
 
   const slotId = payload.availabilityId;
-  console.log(slotId);
-
   const slot = await prisma.availability.findUnique({
     where: { id: slotId },
   });
