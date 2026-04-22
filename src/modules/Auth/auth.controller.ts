@@ -22,10 +22,10 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
         const result = await AuthService.loginUser(req.body)
 
         res.cookie("token", result.token, {
-            secure: false,
             httpOnly: true,
-            sameSite: "lax"
-        })
+            secure: true,
+            sameSite: "none",
+        });
 
         sendResponse(res, {
             statusCode: 201,
