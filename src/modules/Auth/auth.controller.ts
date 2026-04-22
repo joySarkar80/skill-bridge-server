@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AuthService } from "./auth.service";
 import sendResponse from "../../utils/sendRespons";
 
-const createUser = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const result = await AuthService.createUser(req.body)
 
@@ -13,16 +13,11 @@ const createUser = async (req: Request, res: Response) => {
             data: result
         })
     } catch (error) {
-        sendResponse(res, {
-            statusCode: 201,
-            success: true,
-            message: "Something went wrong!",
-            data: error
-        })
+        next(error)
     }
 }
 
-const loginUser = async (req: Request, res: Response) => {
+const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const result = await AuthService.loginUser(req.body)
 
@@ -39,12 +34,7 @@ const loginUser = async (req: Request, res: Response) => {
             data: result
         })
     } catch (error: any) {
-        sendResponse(res, {
-            statusCode: 400,
-            success: false,
-            message: error.message,
-            data: error
-        })
+        next(error)
     }
 }
 

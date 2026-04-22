@@ -1,40 +1,35 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { CategoryService } from "./category.service";
+import sendResponse from "../../utils/sendRespons";
 
-const createCatagory = async (req: Request, res: Response) => {
+const createCatagory = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await CategoryService.createCategory(req.body);
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: 201,
       success: true,
-      message: "Category create successfully",
-      data: result,
-    });
+      message: "Category created",
+      data: result
+    })
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to create category",
-      error,
-    });
+    next(error)
   }
 };
 
 
-const getAllCategory = async (req: Request, res: Response) => {
+const getAllCategory = async (req: Request, res: Response, next: NextFunction) => {
   try {
-  const result = await CategoryService.getAllCategory();
+    const result = await CategoryService.getAllCategory();
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
-      message: "Category retrive successfully",
-      data: result,
-    });
+      message: "Category all fetched",
+      data: result
+    })
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to retrive categorys",
-      error,
-    });
+    next(error)
   }
 };
 

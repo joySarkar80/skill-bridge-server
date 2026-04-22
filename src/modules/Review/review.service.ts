@@ -99,6 +99,9 @@ const getAllReviewsPublic = async () => {
       createdAt: "desc",
     },
   });
+  if (!reviews) {
+    return null; // no loading needed
+  }
   return reviews;
 };
 

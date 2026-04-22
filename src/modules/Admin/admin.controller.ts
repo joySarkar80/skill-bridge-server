@@ -1,59 +1,49 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AdminService } from "./admin.service";
+import sendResponse from "../../utils/sendRespons";
 
-const getAllUsers = async (req: Request, res: Response) => {
+const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await AdminService.getAllUsers();
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
-      message: "Users retrieved successfully",
-      data: result,
-    });
+      message: "All user fetched",
+      data: result
+    })
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to retrieve users",
-      error,
-    });
+    next(error)
   }
 };
 
-const getAllStudents = async (req: Request, res: Response) => {
+const getAllStudents = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await AdminService.getAllStudents();
 
-    res.status(200).json({
-      success: true,
+    sendResponse(res, {
       statusCode: 200,
-      message: "Students retrieved successfully",
-      data: result,
-    });
+      success: true,
+      message: "All students fetched",
+      data: result
+    })
   } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "Internal Server Error",
-      error: error,
-    });
+    next(error)
   }
 };
 
-const getAllBooking = async (req: Request, res: Response) => {
+const getAllBooking = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await AdminService.getAllBooking();
 
-    res.status(200).json({
-      success: true,
+     sendResponse(res, {
       statusCode: 200,
-      message: "Bookings retrieved successfully",
-      data: result,
-    });
+      success: true,
+      message: "Booking retruved successfully",
+      data: result
+    })
   } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "Internal Server Error",
-      error: error,
-    });
+    next(error)
   }
 };
 

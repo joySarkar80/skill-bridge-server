@@ -1,28 +1,27 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { UserService } from "./user.service";
+import sendResponse from "../../utils/sendRespons";
 
-const getSingleUser = async (req: Request, res: Response) => {
+const getSingleUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
 
     const result =
       await UserService.getSingleUser(id as string);
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
-      message: "User fetched successfully",
-      data: result,
-    });
+      message: "Single user fetched",
+      data: result
+    })
   } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error)
   }
 };
 
 
-const updateUserStatusHandler = async (req: Request, res: Response) => {
+const updateUserStatusHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
 
@@ -37,10 +36,7 @@ const updateUserStatusHandler = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message,
-    });
+    next(error)
   }
 };
 

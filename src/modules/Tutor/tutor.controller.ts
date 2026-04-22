@@ -1,84 +1,75 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { TutorProfileService } from "./tutor.service";
+import sendResponse from "../../utils/sendRespons";
 
-const createTutorProfile = async (req: Request, res: Response) => {
+const createTutorProfile = async (req: Request, res: Response, next: NextFunction) => {
   // console.log(req);
   try {
     const user = req.user;
     const result = await TutorProfileService.createTutorProfile(user?.id, req.body);
 
-    res.status(201).json({
+    sendResponse(res, {
+      statusCode: 201,
       success: true,
-      message: "Profile created successfully",
-      data: result,
-    });
+      message: "Profile created",
+      data: result
+    })
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Something went wrong",
-    });
+    next(error)
   }
 };
 
-const getAllTutorProfile = async (req: Request, res: Response) => {
+const getAllTutorProfile = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await TutorProfileService.getAllTutorProfile();
-    res.status(201).json({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
-      message: "Retrive all tutor successfully",
-      data: result,
-    });
+      message: "All tutor profile fetched",
+      data: result
+    })
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "cant retrive tutor profiles!",
-    });
+    next(error)
   }
 }
 
-const getAllTutors = async (req: Request, res: Response) => {
+const getAllTutors = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await TutorProfileService.getAllTutors();
 
-    res.status(200).json({
-      success: true,
+    sendResponse(res, {
       statusCode: 200,
-      message: "Tutors retrieved successfully",
-      data: result,
-    });
+      success: true,
+      message: "All tutor fetched",
+      data: result
+    })
   } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "Internal Server Error",
-      error: error,
-    });
+    next(error)
   }
 };
 
-const getSingleTutorProfile = async (req: Request, res: Response) => {
+const getSingleTutorProfile = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     // console.log(id);
 
     const result = await TutorProfileService.getSingleTutorProfile(id as string);
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
-      message: "Tutor profile fetched successfully",
-      data: result,
-    });
+      message: "Single tutor profile fetched",
+      data: result
+    })
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-      error,
-    });
+    next(error)
   }
 };
 
 const updateTutorProfile = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
   try {
     const userId = req.user?.id;
@@ -96,35 +87,30 @@ const updateTutorProfile = async (
         req.body
       );
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
       message: "Profile updated successfully",
-      data: result,
-    });
+      data: result
+    })
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message:
-        error.message ||
-        "Failed to update profile",
-    });
+    next(error)
   }
 };
 
-const getTutorsByCategoryHandler = async (req: Request, res: Response) => {
+const getTutorsByCategoryHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const result = await TutorProfileService.getTutorsByCategory(id as string);
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
-      data: result,
-    });
+      message: "All Tutor fetched by category",
+      data: result
+    })
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to fetch tutors",
-    });
+    next(error)
   }
 };
 

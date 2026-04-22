@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { bookingService } from "./bookings.service";
+import sendResponse from "../../utils/sendRespons";
 
-const createBookings = async (req: Request, res: Response) => {
+const createBookings = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = req.user;
     const result = await bookingService.createBooking(
@@ -9,39 +10,35 @@ const createBookings = async (req: Request, res: Response) => {
       req.body
     );
 
-    res.status(201).json({
+    sendResponse(res, {
+      statusCode: 201,
       success: true,
-      message: "Bookings created successfully",
-      data: result,
-    });
+      message: "Booking Created",
+      data: result
+    })
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Something went wrong",
-    });
+    next(error)
   }
 };
 
-const getBookingsByStudentId = async (req: Request, res: Response) => {
+const getBookingsByStudentId = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const result = await bookingService.getBookingsByStudentId(id as string);
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
-      message: "Bookings fetched successfully",
-      data: result,
-    });
+      message: "Booking retrived",
+      data: result
+    })
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Something went wrong",
-    });
+    next(error)
   }
 };
 
 
-const getTutorBookingsHandler = async (req: Request, res: Response) => {
+const getTutorBookingsHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = req.user;
 
@@ -49,20 +46,19 @@ const getTutorBookingsHandler = async (req: Request, res: Response) => {
 
     const result = await bookingService.getTutorBookings(user?.id);
 
-    res.json({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
-      data: result,
-    });
+      message: "Tutor Booking retrived",
+      data: result
+    })
   } catch (err: any) {
-    res.status(400).json({
-      success: false,
-      message: err.message,
-    });
+    next(err)
   }
 };
 
 
-const updateBookingStatusHandler = async (req: Request, res: Response) => {
+const updateBookingStatusHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const user = req.user;
@@ -73,16 +69,14 @@ const updateBookingStatusHandler = async (req: Request, res: Response) => {
       user?.role
     );
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
       message: "Booking status updated",
-      data: result,
-    });
+      data: result
+    })
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message,
-    });
+    next(error)
   }
 };
 
