@@ -21,18 +21,20 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const result = await AuthService.loginUser(req.body)
 
-        res.cookie("token", result.token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "none",
-        });
-
-        sendResponse(res, {
-            statusCode: 201,
-            success: true,
-            message: "User logged in successfull",
-            data: result
-        })
+        res
+            .cookie("token", result.token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "none",
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+                path: "/",
+            })
+            .status(201)
+            .json({
+                success: true,
+                message: "User logged in successfully",
+                data: result,
+            });
     } catch (error: any) {
         next(error)
     }

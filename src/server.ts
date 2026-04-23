@@ -1,4 +1,14 @@
-import app from "./app";
-import serverless from "serverless-http";
+import app from './app';
+import config from './config';
 
-export default serverless(app);
+async function main() {
+    try {
+        app.listen(config.port, () => {
+            console.log(`Example app listening on port on ${config.port}`);
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+main();
