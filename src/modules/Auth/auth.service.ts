@@ -27,7 +27,7 @@ const loginUser = async (payload: any) => {
     if (!user) {
         throw new Error("User not found!")
     }
-    
+
     // const match = await bcrypt.compare(pass as string, data.password);
 
     const isPasswordMatched = await bcrypt.compare(payload.password, user.password)

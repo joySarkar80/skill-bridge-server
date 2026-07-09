@@ -85,6 +85,7 @@ model Booking {
   id        String        @id @default(uuid())
   studentId String
   tutorId   String
+  dayOfWeek Int
   date      String
   startTime String
   endTime   String
@@ -97,7 +98,7 @@ model Booking {
   tutor   User    @relation("TutorBookings", fields: [tutorId], references: [id])
   review  Review?
 
-  @@unique([tutorId, date, startTime, endTime])
+  @@unique([tutorId, dayOfWeek, date, startTime, endTime])
 }
 
 model Review {

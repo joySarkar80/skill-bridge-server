@@ -20,14 +20,25 @@ export type BookingModel = runtime.Types.Result.DefaultSelection<Prisma.$Booking
 
 export type AggregateBooking = {
   _count: BookingCountAggregateOutputType | null
+  _avg: BookingAvgAggregateOutputType | null
+  _sum: BookingSumAggregateOutputType | null
   _min: BookingMinAggregateOutputType | null
   _max: BookingMaxAggregateOutputType | null
+}
+
+export type BookingAvgAggregateOutputType = {
+  dayOfWeek: number | null
+}
+
+export type BookingSumAggregateOutputType = {
+  dayOfWeek: number | null
 }
 
 export type BookingMinAggregateOutputType = {
   id: string | null
   studentId: string | null
   tutorId: string | null
+  dayOfWeek: number | null
   date: string | null
   startTime: string | null
   endTime: string | null
@@ -40,6 +51,7 @@ export type BookingMaxAggregateOutputType = {
   id: string | null
   studentId: string | null
   tutorId: string | null
+  dayOfWeek: number | null
   date: string | null
   startTime: string | null
   endTime: string | null
@@ -52,6 +64,7 @@ export type BookingCountAggregateOutputType = {
   id: number
   studentId: number
   tutorId: number
+  dayOfWeek: number
   date: number
   startTime: number
   endTime: number
@@ -62,10 +75,19 @@ export type BookingCountAggregateOutputType = {
 }
 
 
+export type BookingAvgAggregateInputType = {
+  dayOfWeek?: true
+}
+
+export type BookingSumAggregateInputType = {
+  dayOfWeek?: true
+}
+
 export type BookingMinAggregateInputType = {
   id?: true
   studentId?: true
   tutorId?: true
+  dayOfWeek?: true
   date?: true
   startTime?: true
   endTime?: true
@@ -78,6 +100,7 @@ export type BookingMaxAggregateInputType = {
   id?: true
   studentId?: true
   tutorId?: true
+  dayOfWeek?: true
   date?: true
   startTime?: true
   endTime?: true
@@ -90,6 +113,7 @@ export type BookingCountAggregateInputType = {
   id?: true
   studentId?: true
   tutorId?: true
+  dayOfWeek?: true
   date?: true
   startTime?: true
   endTime?: true
@@ -137,6 +161,18 @@ export type BookingAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: BookingAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: BookingSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: BookingMinAggregateInputType
@@ -167,6 +203,8 @@ export type BookingGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: BookingCountAggregateInputType | true
+  _avg?: BookingAvgAggregateInputType
+  _sum?: BookingSumAggregateInputType
   _min?: BookingMinAggregateInputType
   _max?: BookingMaxAggregateInputType
 }
@@ -175,6 +213,7 @@ export type BookingGroupByOutputType = {
   id: string
   studentId: string
   tutorId: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -182,6 +221,8 @@ export type BookingGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   _count: BookingCountAggregateOutputType | null
+  _avg: BookingAvgAggregateOutputType | null
+  _sum: BookingSumAggregateOutputType | null
   _min: BookingMinAggregateOutputType | null
   _max: BookingMaxAggregateOutputType | null
 }
@@ -208,6 +249,7 @@ export type BookingWhereInput = {
   id?: Prisma.StringFilter<"Booking"> | string
   studentId?: Prisma.StringFilter<"Booking"> | string
   tutorId?: Prisma.StringFilter<"Booking"> | string
+  dayOfWeek?: Prisma.IntFilter<"Booking"> | number
   date?: Prisma.StringFilter<"Booking"> | string
   startTime?: Prisma.StringFilter<"Booking"> | string
   endTime?: Prisma.StringFilter<"Booking"> | string
@@ -223,6 +265,7 @@ export type BookingOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   tutorId?: Prisma.SortOrder
+  dayOfWeek?: Prisma.SortOrder
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
@@ -236,12 +279,13 @@ export type BookingOrderByWithRelationInput = {
 
 export type BookingWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  tutorId_date_startTime_endTime?: Prisma.BookingTutorIdDateStartTimeEndTimeCompoundUniqueInput
+  tutorId_dayOfWeek_date_startTime_endTime?: Prisma.BookingTutorIdDayOfWeekDateStartTimeEndTimeCompoundUniqueInput
   AND?: Prisma.BookingWhereInput | Prisma.BookingWhereInput[]
   OR?: Prisma.BookingWhereInput[]
   NOT?: Prisma.BookingWhereInput | Prisma.BookingWhereInput[]
   studentId?: Prisma.StringFilter<"Booking"> | string
   tutorId?: Prisma.StringFilter<"Booking"> | string
+  dayOfWeek?: Prisma.IntFilter<"Booking"> | number
   date?: Prisma.StringFilter<"Booking"> | string
   startTime?: Prisma.StringFilter<"Booking"> | string
   endTime?: Prisma.StringFilter<"Booking"> | string
@@ -251,12 +295,13 @@ export type BookingWhereUniqueInput = Prisma.AtLeast<{
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   tutor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   review?: Prisma.XOR<Prisma.ReviewNullableScalarRelationFilter, Prisma.ReviewWhereInput> | null
-}, "id" | "tutorId_date_startTime_endTime">
+}, "id" | "tutorId_dayOfWeek_date_startTime_endTime">
 
 export type BookingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   tutorId?: Prisma.SortOrder
+  dayOfWeek?: Prisma.SortOrder
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
@@ -264,8 +309,10 @@ export type BookingOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.BookingCountOrderByAggregateInput
+  _avg?: Prisma.BookingAvgOrderByAggregateInput
   _max?: Prisma.BookingMaxOrderByAggregateInput
   _min?: Prisma.BookingMinOrderByAggregateInput
+  _sum?: Prisma.BookingSumOrderByAggregateInput
 }
 
 export type BookingScalarWhereWithAggregatesInput = {
@@ -275,6 +322,7 @@ export type BookingScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Booking"> | string
   studentId?: Prisma.StringWithAggregatesFilter<"Booking"> | string
   tutorId?: Prisma.StringWithAggregatesFilter<"Booking"> | string
+  dayOfWeek?: Prisma.IntWithAggregatesFilter<"Booking"> | number
   date?: Prisma.StringWithAggregatesFilter<"Booking"> | string
   startTime?: Prisma.StringWithAggregatesFilter<"Booking"> | string
   endTime?: Prisma.StringWithAggregatesFilter<"Booking"> | string
@@ -285,6 +333,7 @@ export type BookingScalarWhereWithAggregatesInput = {
 
 export type BookingCreateInput = {
   id?: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -300,6 +349,7 @@ export type BookingUncheckedCreateInput = {
   id?: string
   studentId: string
   tutorId: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -311,6 +361,7 @@ export type BookingUncheckedCreateInput = {
 
 export type BookingUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -326,6 +377,7 @@ export type BookingUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   tutorId?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -339,6 +391,7 @@ export type BookingCreateManyInput = {
   id?: string
   studentId: string
   tutorId: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -349,6 +402,7 @@ export type BookingCreateManyInput = {
 
 export type BookingUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -361,6 +415,7 @@ export type BookingUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   tutorId?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -379,8 +434,9 @@ export type BookingOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type BookingTutorIdDateStartTimeEndTimeCompoundUniqueInput = {
+export type BookingTutorIdDayOfWeekDateStartTimeEndTimeCompoundUniqueInput = {
   tutorId: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -390,6 +446,7 @@ export type BookingCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   tutorId?: Prisma.SortOrder
+  dayOfWeek?: Prisma.SortOrder
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
@@ -398,10 +455,15 @@ export type BookingCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type BookingAvgOrderByAggregateInput = {
+  dayOfWeek?: Prisma.SortOrder
+}
+
 export type BookingMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   tutorId?: Prisma.SortOrder
+  dayOfWeek?: Prisma.SortOrder
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
@@ -414,12 +476,17 @@ export type BookingMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   tutorId?: Prisma.SortOrder
+  dayOfWeek?: Prisma.SortOrder
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type BookingSumOrderByAggregateInput = {
+  dayOfWeek?: Prisma.SortOrder
 }
 
 export type BookingScalarRelationFilter = {
@@ -531,6 +598,7 @@ export type BookingUpdateOneRequiredWithoutReviewNestedInput = {
 
 export type BookingCreateWithoutStudentInput = {
   id?: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -544,6 +612,7 @@ export type BookingCreateWithoutStudentInput = {
 export type BookingUncheckedCreateWithoutStudentInput = {
   id?: string
   tutorId: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -565,6 +634,7 @@ export type BookingCreateManyStudentInputEnvelope = {
 
 export type BookingCreateWithoutTutorInput = {
   id?: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -578,6 +648,7 @@ export type BookingCreateWithoutTutorInput = {
 export type BookingUncheckedCreateWithoutTutorInput = {
   id?: string
   studentId: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -620,6 +691,7 @@ export type BookingScalarWhereInput = {
   id?: Prisma.StringFilter<"Booking"> | string
   studentId?: Prisma.StringFilter<"Booking"> | string
   tutorId?: Prisma.StringFilter<"Booking"> | string
+  dayOfWeek?: Prisma.IntFilter<"Booking"> | number
   date?: Prisma.StringFilter<"Booking"> | string
   startTime?: Prisma.StringFilter<"Booking"> | string
   endTime?: Prisma.StringFilter<"Booking"> | string
@@ -646,6 +718,7 @@ export type BookingUpdateManyWithWhereWithoutTutorInput = {
 
 export type BookingCreateWithoutReviewInput = {
   id?: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -660,6 +733,7 @@ export type BookingUncheckedCreateWithoutReviewInput = {
   id?: string
   studentId: string
   tutorId: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -686,6 +760,7 @@ export type BookingUpdateToOneWithWhereWithoutReviewInput = {
 
 export type BookingUpdateWithoutReviewInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -700,6 +775,7 @@ export type BookingUncheckedUpdateWithoutReviewInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   tutorId?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -711,6 +787,7 @@ export type BookingUncheckedUpdateWithoutReviewInput = {
 export type BookingCreateManyStudentInput = {
   id?: string
   tutorId: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -722,6 +799,7 @@ export type BookingCreateManyStudentInput = {
 export type BookingCreateManyTutorInput = {
   id?: string
   studentId: string
+  dayOfWeek: number
   date: string
   startTime: string
   endTime: string
@@ -732,6 +810,7 @@ export type BookingCreateManyTutorInput = {
 
 export type BookingUpdateWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -745,6 +824,7 @@ export type BookingUpdateWithoutStudentInput = {
 export type BookingUncheckedUpdateWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tutorId?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -757,6 +837,7 @@ export type BookingUncheckedUpdateWithoutStudentInput = {
 export type BookingUncheckedUpdateManyWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tutorId?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -767,6 +848,7 @@ export type BookingUncheckedUpdateManyWithoutStudentInput = {
 
 export type BookingUpdateWithoutTutorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -780,6 +862,7 @@ export type BookingUpdateWithoutTutorInput = {
 export type BookingUncheckedUpdateWithoutTutorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -792,6 +875,7 @@ export type BookingUncheckedUpdateWithoutTutorInput = {
 export type BookingUncheckedUpdateManyWithoutTutorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  dayOfWeek?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -806,6 +890,7 @@ export type BookingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   studentId?: boolean
   tutorId?: boolean
+  dayOfWeek?: boolean
   date?: boolean
   startTime?: boolean
   endTime?: boolean
@@ -821,6 +906,7 @@ export type BookingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   studentId?: boolean
   tutorId?: boolean
+  dayOfWeek?: boolean
   date?: boolean
   startTime?: boolean
   endTime?: boolean
@@ -835,6 +921,7 @@ export type BookingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   studentId?: boolean
   tutorId?: boolean
+  dayOfWeek?: boolean
   date?: boolean
   startTime?: boolean
   endTime?: boolean
@@ -849,6 +936,7 @@ export type BookingSelectScalar = {
   id?: boolean
   studentId?: boolean
   tutorId?: boolean
+  dayOfWeek?: boolean
   date?: boolean
   startTime?: boolean
   endTime?: boolean
@@ -857,7 +945,7 @@ export type BookingSelectScalar = {
   updatedAt?: boolean
 }
 
-export type BookingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "tutorId" | "date" | "startTime" | "endTime" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["booking"]>
+export type BookingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "tutorId" | "dayOfWeek" | "date" | "startTime" | "endTime" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["booking"]>
 export type BookingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   tutor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -883,6 +971,7 @@ export type $BookingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     studentId: string
     tutorId: string
+    dayOfWeek: number
     date: string
     startTime: string
     endTime: string
@@ -1318,6 +1407,7 @@ export interface BookingFieldRefs {
   readonly id: Prisma.FieldRef<"Booking", 'String'>
   readonly studentId: Prisma.FieldRef<"Booking", 'String'>
   readonly tutorId: Prisma.FieldRef<"Booking", 'String'>
+  readonly dayOfWeek: Prisma.FieldRef<"Booking", 'Int'>
   readonly date: Prisma.FieldRef<"Booking", 'String'>
   readonly startTime: Prisma.FieldRef<"Booking", 'String'>
   readonly endTime: Prisma.FieldRef<"Booking", 'String'>

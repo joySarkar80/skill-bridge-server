@@ -127,6 +127,7 @@ export const BookingScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
   tutorId: 'tutorId',
+  dayOfWeek: 'dayOfWeek',
   date: 'date',
   startTime: 'startTime',
   endTime: 'endTime',
