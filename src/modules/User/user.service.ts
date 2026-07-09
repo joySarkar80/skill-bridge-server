@@ -26,6 +26,29 @@ const getSingleUser = async (id: string) => {
     return result;
 };
 
+const updateUserStatus = async (userId: string) => {
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+    });
+
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    const newStatus =
+        user.status === "ACTIVE" ? "BANNED" : "ACTIVE";
+
+    const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+            status: newStatus,
+        },
+    });
+
+    return updatedUser;
+};
+
 export const UserService = {
     getSingleUser,
+    updateUserStatus
 };

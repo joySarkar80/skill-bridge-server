@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import { NextFunction, Request, Response } from "express";
 // import jwt, { JwtPayload } from "jsonwebtoken"
 // import config from "../config";
@@ -67,6 +68,10 @@ import {
 import jwt, {
     JwtPayload,
 } from "jsonwebtoken";
+=======
+import { NextFunction, Request, Response, } from "express";
+import jwt, { JwtPayload, } from "jsonwebtoken";
+>>>>>>> 928eb9304f1ba3644fc8a72860999ae10e977da0
 import config from "../config";
 import { prisma } from "../lib/prisma";
 
@@ -83,10 +88,14 @@ const auth = (...roles: UserRole[]) => {
         next: NextFunction
     ) => {
         try {
+<<<<<<< HEAD
             // ✅ token from cookie
             const token = req.cookies?.token;
 
             console.log("cookie token:", token);
+=======
+            const token = req.cookies?.token;
+>>>>>>> 928eb9304f1ba3644fc8a72860999ae10e977da0
 
             if (!token) {
                 return res.status(401).json({
@@ -99,6 +108,7 @@ const auth = (...roles: UserRole[]) => {
                 token,
                 config.jwtSecret as string
             ) as JwtPayload;
+<<<<<<< HEAD
 
             const userData =
                 await prisma.user.findUnique({
@@ -107,6 +117,16 @@ const auth = (...roles: UserRole[]) => {
                     },
                 });
 
+=======
+
+            const userData = await prisma.user.findUnique({
+                where: {
+                    email: decoded.email,
+                },
+
+            });
+
+>>>>>>> 928eb9304f1ba3644fc8a72860999ae10e977da0
             if (!userData) {
                 return res.status(401).json({
                     success: false,
@@ -115,6 +135,7 @@ const auth = (...roles: UserRole[]) => {
             }
 
             if (userData.status !== "ACTIVE") {
+<<<<<<< HEAD
                 return res.status(401).json({
                     success: false,
                     message:
@@ -129,6 +150,18 @@ const auth = (...roles: UserRole[]) => {
                 return res.status(403).json({
                     success: false,
                     message: "Unauthorized role",
+=======
+                return res.status(403).json({
+                    success: false,
+                    message: "User status not active",
+                });
+            }
+
+            if (roles.length && !roles.includes(decoded.role)) {
+                return res.status(403).json({
+                    success: false,
+                    message: "Unauthorized!!!",
+>>>>>>> 928eb9304f1ba3644fc8a72860999ae10e977da0
                 });
             }
 
@@ -136,9 +169,17 @@ const auth = (...roles: UserRole[]) => {
 
             next();
         } catch (error: any) {
+<<<<<<< HEAD
             return res.status(500).json({
                 success: false,
                 message: error.message,
+=======
+            return res.status(401).json({
+                success: false,
+                message:
+                    error.message ||
+                    "Invalid token",
+>>>>>>> 928eb9304f1ba3644fc8a72860999ae10e977da0
             });
         }
     };

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -115,3 +116,125 @@ model Review {
   student User    @relation("StudentReviews", fields: [studentId], references: [id])
   tutor   User    @relation("TutorReviews", fields: [tutorId], references: [id])
 }
+=======
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id              String        @id @default(uuid())
+  name            String
+  email           String        @unique
+  password        String
+  role            Role
+  status          UserStatus    @default(ACTIVE)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  studentBookings Booking[]     @relation("StudentBookings")
+  tutorBookings   Booking[]     @relation("TutorBookings")
+  reviewsGiven    Review[]      @relation("StudentReviews")
+  reviewsReceived Review[]      @relation("TutorReviews")
+  tutorProfile    TutorProfile?
+
+  @@index([status])
+  @@map("users")
+}
+
+model TutorProfile {
+  id           String         @id @default(uuid())
+  userId       String         @unique
+  bio          String?
+  hourlyRate   Float
+  experience   Int?
+  categoryId   String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  availability Availability[]
+  category     Category       @relation(fields: [categoryId], references: [id])
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id            String         @id @default(uuid())
+  name          String         @unique
+  createdAt     DateTime       @default(now())
+  tutorProfiles TutorProfile[]
+}
+
+model Availability {
+  id        String   @id @default(uuid())
+  tutorId   String
+  date      DateTime
+  startTime String
+  endTime   String
+  isBooked  Boolean  @default(false)
+
+  tutor   TutorProfile @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  booking Booking?
+
+  @@unique([tutorId, date, startTime, endTime])
+}
+
+model Booking {
+  id             String @id @default(uuid())
+  availabilityId String @unique
+
+  studentId String
+  tutorId   String
+
+  categoryId   String
+  categoryName String
+  hourlyRate   Float
+  tutorName    String
+
+  date      DateTime
+  startTime String
+  endTime   String
+
+  status BookingStatus @default(CONFIRMED)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  availability Availability @relation(fields: [availabilityId], references: [id])
+
+  student User @relation("StudentBookings", fields: [studentId], references: [id])
+  tutor   User @relation("TutorBookings", fields: [tutorId], references: [id])
+
+  review Review?
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  bookingId String   @unique
+  studentId String
+  tutorId   String
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  student   User     @relation("StudentReviews", fields: [studentId], references: [id])
+  tutor     User     @relation("TutorReviews", fields: [tutorId], references: [id])
+}
+
+enum Role {
+  STUDENT
+  TUTOR
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  BANNED
+}
+
+enum BookingStatus {
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+>>>>>>> 928eb9304f1ba3644fc8a72860999ae10e977da0

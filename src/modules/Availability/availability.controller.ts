@@ -1,27 +1,46 @@
-import { Request, Response } from "express";
-import { availabilityService } from "./availability.service";
+import { NextFunction, Request, Response } from "express";
+import { availabilityService, updateAvailability } from "./availability.service";
+import sendResponse from "../../utils/sendRespons";
 
-const createAvailability = async (req: Request, res: Response) => {
-      try {
-        const user = req.user;
-        const result = await availabilityService.createAvailability(
-          user?.id,
-          req.body
-        );
-    
-        res.status(201).json({
-          success: true,
-          message: "Availability created successfully",
-          data: result,
-        });
-      } catch (error: any) {
-        res.status(400).json({
-          success: false,
-          message: error.message || "Something went wrong",
-        });
-      }
+const createAvailability = async (req: Request, res: Response, next: NextFunction) => {
+  // console.log(req.body);
+  try {
+    const user = req.user;
+    const result = await availabilityService.createAvailability(
+      user?.id,
+      req.body
+    );
+
+
+    sendResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: "Availability Created",
+      data: result
+    })
+  } catch (error: any) {
+    next(error)
+  }
+};
+
+const updateAvailabilityHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+
+    const result = await updateAvailability(id as string, req.body);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Slot Updated successfully",
+      data: result
+    })
+  } catch (error: any) {
+    next(error)
+  }
 };
 
 export const availabilityController = {
-  createAvailability
+  createAvailability,
+  updateAvailabilityHandler
 };

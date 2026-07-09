@@ -6,7 +6,6 @@ import config from "../../config";
 const createUser = async (payload: any) => {
     const hashPassword = await bcrypt.hash(payload.password, 8);
 
-
     const result = await prisma.user.create({
         data: {
             ...payload,
@@ -43,15 +42,11 @@ const loginUser = async (payload: any) => {
         status: user.status,
         email: user.email
     }
-
     const token = jwt.sign(userData, config.jwtSecret as string, { expiresIn: "1d" })
-
     return {
         token,
         user
     }
-
-
 }
 
 export const AuthService = {
